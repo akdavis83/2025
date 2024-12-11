@@ -1,0 +1,165 @@
+@import url(https://fonts.bunny.net/css?family=monda:400,600);
+* {
+  box-sizing: border-box;
+}
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+:root {
+  --clr-bg: black;
+}
+body {
+  font-family: "Monda", sans-serif;
+
+  height: 100svh;
+  margin: 0;
+  padding: 2rem;
+  background-color: var(--clr-bg);
+  background-image: radial-gradient(black, rgb(15, 23, 42));
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: rgb(234, 233, 233);
+}
+.wrapper {
+  position: relative;
+  width: min(100%, 600px);
+}
+
+.wrapper > h1 {
+  font-size: clamp(0.8rem, 3.5vw - 0.05rem, 1.2rem);
+  text-align: left;
+  /*text-transform: uppercase;*/
+  margin: 0;
+  font-weight: 400;
+}
+.wrapper > p {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: -1;
+  transition: opacity 300ms ease-in-out, translate 300ms ease-in-out;
+  translate: 0 -2rem;
+  opacity: 0;
+  font-size: clamp(0.75rem, 2.5vw - 0.05rem, .9rem);
+  text-align: right;
+  margin: 0.5rem 0 0;
+  line-height: 1;
+}
+.wrapper:hover > p {
+  opacity: 1;
+  translate: 0;
+}
+.celebrate {
+  --line-thickness: clamp(1px, 1.5vw + 1px, 7px);
+  --line-color: var(--clr-bg);
+  --line-radius: var(--line-thickness);
+  --line-offset: calc(var(--line-thickness) * -1);
+  --line-radius: 5px;
+
+  display: grid;
+  gap: var(--line-thickness);
+  grid-auto-flow: column;
+  grid-template-columns: repeat(4, 1fr);
+
+}
+.celebrate > * {
+  grid-row: span 2;
+  position: relative;
+  aspect-ratio: 1;
+  background-image: conic-gradient(
+    from var(--angle) at 50% 100% in hsl longer hue,
+    red,
+    purple,
+    red
+  );
+  background-attachment: fixed;
+  background-size: 100%;
+  border-radius: clamp(2px, 1.5vw + 1px, 15px);
+  animation: neon-rotate 10000ms linear infinite;
+}
+@keyframes neon-rotate {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* number lines added as pseudo elements */
+.celebrate > *::before,
+.celebrate > *::after {
+  content: "";
+  position: absolute;
+  background-color: var(--line-color);
+  border-radius: var(--radius-tl, 0) var(--radius-tr, 0) var(--radius-br, 0)
+    var(--radius-bl, 0);
+  z-index: 2;
+  top: var(--line-top, auto);
+  right: var(--line-right, auto);
+  bottom: var(--line-bottom, auto);
+  left: var(--line-left, auto);
+  translate: var(--translate-x, 0) var(--translate-y, 0);
+  width: var(--line-width, 60%);
+  height: var(--line-height, 0);
+}
+.celebrate > *:nth-child(1)::before,
+.celebrate > *:nth-child(3)::before {
+  --radius-tr: var(--line-radius);
+  --radius-br: var(--line-radius);
+  --line-top: 30%;
+  --line-height: var(--line-thickness);
+}
+.celebrate > *:nth-child(1)::after,
+.celebrate > *:nth-child(3)::after {
+  --line-bottom: 30%;
+  --line-right: -1px;
+  --line-height: var(--line-thickness);
+  --radius-tl: var(--line-radius);
+  --radius-bl: var(--line-radius);
+}
+.celebrate > *:nth-child(2):before {
+  --line-top: 30%;
+  --line-left: 50%;
+  --translate-x: -50%;
+  --line-width: calc(
+    var(--line-thickness) * 1.1
+  ); /* visually vetical lines look thinner than horizontal lines so we magic number a slight increase */
+  --line-height: 40%;
+  --radius-tl: var(--line-radius);
+  --radius-tr: var(--line-radius);
+  --radius-br: var(--line-radius);
+  --radius-bl: var(--line-radius);
+}
+.celebrate > *:nth-child(4)::before {
+  --line-top: 30%;
+  --line-right: -1px;
+  --line-height: var(--line-thickness);
+  --radius-tl: var(--line-radius);
+  --radius-bl: var(--line-radius);
+}
+.celebrate > *:nth-child(4)::after {
+  --line-bottom: 30%;
+  --line-height: var(--line-thickness);
+  --radius-tr: var(--line-radius);
+  --radius-br: var(--line-radius);
+}
+/*
+.celebrate > *:nth-child(5) {
+  grid-column-start: 5;
+  grid-row-start: 1;
+  grid-row-end: span 1;
+  align-self: stretch;
+}
+.celebrate > *:nth-child(6) {
+  grid-column-start: 5;
+  grid-row-start: 2;
+  grid-row-end: span 1;
+  align-self: stretch;
+}
+*/
